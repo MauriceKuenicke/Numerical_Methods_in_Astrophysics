@@ -35,6 +35,6 @@ program statistics
     write(20, '("Mean:", 1X, F15.11, /, "Std:", 2X, F15.11)') mean_dp, std_pop_dp
 
     ! free memory
-    deallocate (input_data_dp)
+    deallocate(input_data_dp)
     deallocate(deviation_array_dp) 
 end program statistics
