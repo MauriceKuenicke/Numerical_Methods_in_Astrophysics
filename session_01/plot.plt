@@ -1,5 +1,5 @@
 set terminal x11 0
-set title "Orbital Period of Planets around the Sun"
+set title "Orbital periods of planets around the Sun"
 set nokey
 set logscale y
 set logscale x

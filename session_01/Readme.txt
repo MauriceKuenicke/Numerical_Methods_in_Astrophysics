@@ -1,4 +1,6 @@
-
+1.1.2 Plotting
+The log-log plot helps us verify Kepler's third law, which states that the square of the orbital periods increase with the cubes of the planetary distances.
+Therefore the plot should be linear with a slope of 3/2.
 
 1.1.5 Teaser
 What is the purpose of the program?
