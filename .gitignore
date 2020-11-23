@@ -6,7 +6,9 @@
 
 # Unignore all dirs
 !*/
+!Makefile
 
 *.mod
 period.dat
 *.png
+*.o
