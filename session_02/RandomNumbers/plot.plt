@@ -1,3 +1,5 @@
+# Plot with gnuplot -p plot.plt
+
 set terminal png
 set title "Time Complexity Comparison"
 set logscale y
