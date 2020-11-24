@@ -80,7 +80,6 @@ FUNCTION det(a) RESULT(d)
         p = p*a(j,ind(i+j))
      ENDDO
      d = d + p
-     !PRINT*, d
   ENDDO
 
   ! set ne-sw diagonal
