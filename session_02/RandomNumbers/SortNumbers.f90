@@ -50,7 +50,7 @@ recursive subroutine quicksort(N, data_array)
     integer :: left, right, pos
     real(dp) :: pivot, tmp
     if (N > 1) then
-        pivot = data_array(N-1) !not optimal
+        pivot = data_array(N-1) !not optimal --> median element might be a bit better for the performance
         left = 0
         right = N + 1
 
