@@ -69,9 +69,8 @@ FUNCTION det(a) RESULT(d)
   n = size(a,1)
 
   ! allocate ind array and set nw-se diagonal
-  ALLOCATE(ind(2*n-1))
-  ind = (/ (i,i=1,n), (i,i=1,n) /) ! Changed the second part of ind from (i,i=1,n-1) to (i,i=1,n) to make the index run over every matrix element
-  PRINT*, ind
+  ALLOCATE(ind(2*n))                           ! Changed allocation to 6 elements
+  ind = (/ (i,i=1,n), (i,i=1,n) /)             ! Changed the second part of ind from (i,i=1,n-1) to (i,i=1,n) to make the index run over every matrix element
 
   ! add up nw-to-se diagonals
   DO i=1, n
@@ -83,7 +82,7 @@ FUNCTION det(a) RESULT(d)
   ENDDO
 
   ! set ne-sw diagonal
-  ind = (/ (i,i=n,1,-1), (i,i=n,1,-1) /) ! Changed the ind variable as before to the same as the first part of the index that every matrix element is considered: from (i,i=n,2,-1) to (i,i=n,1,-1)
+  ind = (/ (i,i=n,1,-1), (i,i=n,1,-1) /)       ! Changed the ind variable as before to the same as the first part of the index that every matrix element is considered: from (i,i=n,2,-1) to (i,i=n,1,-1)
 
   ! subtract ne-to-sw diagonals
   DO i=1, n
