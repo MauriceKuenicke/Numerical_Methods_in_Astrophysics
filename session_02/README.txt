@@ -12,7 +12,7 @@
     b) The RandomNumbers.f90 file contains the actual source code for the program. From here other functions or subroutines can be called, either from the source file
     directly or from a different module file. RandomNumbers_mod.f90 is a module that contains several functions. It is generally advised to organize functions and
     subroutines into modules so they can be used in different programs as well. This makes sure that you don't have to write the same function twice for different
-    programs which is pne thing you should avoid --> DRY-principle don't repeat yourself
+    programs which is one thing you should avoid --> DRY-principle don't repeat yourself
     
     c) You can compile thie program by simply running "make" inside the RandomNumbers directory.
 
