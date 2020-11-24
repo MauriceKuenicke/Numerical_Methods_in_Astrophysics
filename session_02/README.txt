@@ -1,4 +1,7 @@
+2.1 Assignments
+
 2.1.1 Teaser
+    
     a) The RandomNumbers folder contains one src (source) folder and a Makefile. Make is a build management tool which manages
     the compiling and building process of software. It is useful in projects containing large amounts of files to automate the process
     of compiling and running large codebases. It contains a set of operations executed in the shell.
@@ -25,7 +28,24 @@
     f) Line 19 in RandomNumbers.f90 can be changed to random_uniform(x,y) to call this function for a specific range [x,y[ of values. 
     When called with only one parameter like random_uniform(x) the function generates a set in a range of [0, x[. In this case x and y are floating point numbers.
 
+---------------------------------------------------------------------------------------------------------------
 
+2.1.3 Timing
+
+c) Two function graphs are entered in the plot, which assign a runtime of the program to the number of elements to be sorted, respectively for the algorithms
+   Quick Sort and Insertion Sort. It can be seen that at first the two function graphs are almost identical for a small number of elements to be sorted, and that
+   only after a number of about 1000 elements a measurable speed advantage of the Quick Sort algorithm compared to the Insertion Sort algorithm results. The
+   Insertion Sort Algorithm should scale with N^2 on average, while the Quick Sort Algorithm should scale with N*log(N) on average. In the diagram you can see a
+   different scaling which could correspond to the expectation value, but for a sufficient scaling the amount of data is not yet sufficient.
+   
+d) The double-logarithmic plot is useful, because it makes the nonlinear time scales linear. In addition, extreme values at both ends of the scales can be
+   displayed in a single diagram.
+
+e) The supposedly better sort algorithm is the Quick Sort algorithm, because it does the sorting of a large number of elements faster. However, it should be noted
+   that the Quick Sort algorithm is not a stable sorting algorithm, whereas the Insertion Sort algorithm is. So if you need a stable sorting algorithm, Insertion
+   Sort is preferable.
+
+---------------------------------------------------------------------------------------------------------------
 
 2.2 Bug Hunting Exercise
 
