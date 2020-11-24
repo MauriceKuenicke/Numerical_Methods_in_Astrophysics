@@ -15,7 +15,7 @@ program SortNumbers
         READ(*, *) input_data_dp(i)   
     end do
 
-    call insertion_sort(N, input_data_dp)   ! change here between quicktsort() and insertion_sort
+    call quicksort(N, input_data_dp)   ! change here between quicktsort() and insertion_sort
     !print*, input_data_dp
 
 end program SortNumbers
