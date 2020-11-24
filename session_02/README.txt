@@ -43,7 +43,7 @@ d) The double-logarithmic plot is useful, because it makes the nonlinear time sc
 
 e) The supposedly better sort algorithm is the Quick Sort algorithm, because it does the sorting of a large number of elements faster. However, it should be noted
    that the Quick Sort algorithm is not a stable sorting algorithm, whereas the Insertion Sort algorithm is. So if you need a stable sorting algorithm, Insertion
-   Sort is preferable.
+   Sort might be preferable.
 
 ---------------------------------------------------------------------------------------------------------------
 
