@@ -1,7 +1,8 @@
 2.1.1 Teaser
     a) The RandomNumbers folder contains one src (source) folder and a Makefile. Make is a build management tool which manages
     the compiling and building process of software. It is useful in projects containing large amounts of files to automate the process
-    of compiling and running large codebases. It contains a set of operations executed in the shell.  In this example running "make" will change to the src directory and start a different make file.
+    of compiling and running large codebases. It contains a set of operations executed in the shell.
+    In this example running "make" will change to the src directory and start a different make file.
     The makefile inside the src directory will then compile the Fortran code.
 
 
@@ -23,10 +24,10 @@
 2.2 Bug Hunting Exercise
 
     Adding PRINT statements to the code shows that the matrix elements are not correctly scanned for
-calculation in the loops with the index variables. In the example for the calculation of the ne-to-sw
-diagonals, the elements are in the order 2, 0, 7; 3, 4, 8; 1, 5, 0, where the elements separated by commas are
-multiplied. But instead of the 0 you would expect to multiply a 9 as the last digit. This can be achieved by
-changing the "ind" variable as noted in the program. For a correct calculation of the determinant, the second
-"ind" variable has to be changed as well, because there is also an error here, according to which the matrix
-elements are not passed through completely. Furthermore the ARGUMENT of ALLOCATE(ind(ARGUMENT)) was changed
-from 2*n-1 to 2*n, because now more memory should be allocated for the 6 instead of 5 elements in this array.
+    calculation in the loops with the index variables. In the example for the calculation of the ne-to-sw
+    diagonals, the elements are in the order 2, 0, 7; 3, 4, 8; 1, 5, 0, where the elements separated by commas are
+    multiplied. But instead of the 0 you would expect to multiply a 9 as the last digit. This can be achieved by
+    changing the "ind" variable as noted in the program. For a correct calculation of the determinant, the second
+    "ind" variable has to be changed as well, because there is also an error here, according to which the matrix
+    elements are not passed through completely. Furthermore the ARGUMENT of ALLOCATE(ind(ARGUMENT)) was changed
+    from 2*n-1 to 2*n, because now more memory should be allocated for the 6 instead of 5 elements in this array.
