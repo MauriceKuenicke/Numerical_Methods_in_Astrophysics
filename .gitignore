@@ -10,6 +10,8 @@
 
 *.mod
 period.dat
+accuracy_bisection.dat
+accuracy_newton.dat
 *.png
 *.o
 **.tgz
