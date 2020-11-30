@@ -12,6 +12,7 @@
 period.dat
 accuracy_bisection.dat
 accuracy_newton.dat
+complexnewton.dat
 *.png
 *.o
 **.tgz

@@ -72,7 +72,7 @@ function find_root_newton(func, func_derivative, init_guess, export_accuracy) re
         open(20, file="data/accuracy_newton.dat")
     end if
 
-    epsilon_zero = 1
+    epsilon_zero = 1.d0
     x = init_guess
     iter = 0
     do while(abs(epsilon_zero) > 1e-10 )
@@ -99,6 +99,33 @@ function find_root_newton(func, func_derivative, init_guess, export_accuracy) re
 end function find_root_newton
 
 
+function find_root_newton_complex(func_complex, func_derivative, init_guess) result(r)
+    implicit none 
+    complex(kind=8) :: func_complex, func_derivative, init_guess, func_value, func_value_derivative, z, epsilon_zero
+    integer :: r, iter
+
+    open(20, file="data/complexnewton.dat")
+    
+    r = 0
+    epsilon_zero = 1.d0
+    z = init_guess
+    do while(abs(epsilon_zero) > 1e-10 )
+        func_value = func_complex(z)
+        func_value_derivative = func_derivative(z)
+        epsilon_zero = -(func_value)/(func_value_derivative)
+        z = z + epsilon_zero
+        iter = iter+1
+    end do
+
+    if (imag(z) == 0.d0) then
+        write(20, *) real(init_guess), imag(init_guess), 1, iter
+    else
+        write(20, *) real(init_guess), imag(init_guess), 0, iter
+    end if
+    r = 1
+end function find_root_newton_complex
+
+
 function calc_midpoint(interval_start, interval_end) result(midpoint)
     implicit none
     real(kind=8) :: interval_start, interval_end, midpoint
@@ -107,6 +134,28 @@ function calc_midpoint(interval_start, interval_end) result(midpoint)
 
 end function calc_midpoint
 
+
+subroutine linspace(from, to, array)
+    implicit none 
+    real(kind=8), intent(in) :: from, to
+    real(kind=8), intent(out) :: array(:)
+    real(kind=8) :: range
+    integer :: n, i
+    n = size(array)
+    range = to - from
+
+    if (n == 0) return
+
+    if (n == 1) then
+        array(1) = from
+        return
+    end if
+
+
+    do i=1, n
+        array(i) = from + range * (i - 1) / (n - 1)
+    end do
+end subroutine linspace
 
     
 end module RootFinding

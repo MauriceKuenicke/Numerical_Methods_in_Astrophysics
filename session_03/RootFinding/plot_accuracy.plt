@@ -4,7 +4,7 @@ set terminal png
 set title "Convergence of root finding algorithms"
 set xlabel "# Iterations"
 set ylabel "Error Margin"
-set output "convergence.png"
+set output "convergence_newton_bisection.png"
 
 set logscale y
 

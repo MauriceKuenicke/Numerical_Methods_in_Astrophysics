@@ -32,4 +32,15 @@ module MyFuncs
         real(kind=8) :: y,x
         y = -1.d0*acos(-1.d0)*sin(acos(-1.d0)*x)
       end function dfunc3
+
+
+      function func1_complex(z) result(y)
+        complex(kind=8) :: z,y
+        y = z*z*z - 1
+      end function func1_complex
+
+      function dfunc1_complex(z) result(y)
+        complex(kind=8) :: z,y
+        y = 3*z*z
+      end function dfunc1_complex
 end module MyFuncs
