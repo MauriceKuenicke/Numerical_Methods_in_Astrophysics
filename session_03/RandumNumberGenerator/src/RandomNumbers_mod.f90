@@ -5,10 +5,10 @@ MODULE RandomNumbers_mod
   PRIVATE
 
   INTEGER, PARAMETER            :: LONG = SELECTED_INT_KIND(15)
-  INTEGER(KIND=LONG), PARAMETER :: a = 65539
-  INTEGER(KIND=LONG), PARAMETER :: c = 0
-  INTEGER(KIND=LONG), PARAMETER :: m = 2_LONG**31
-  INTEGER(KIND=LONG)            :: x = 43543645
+  INTEGER(KIND=LONG)            :: a
+  INTEGER(KIND=LONG)            :: c 
+  INTEGER(KIND=LONG)            :: m 
+  INTEGER(KIND=LONG)            :: seed
 
   ! interface for random_uniform, which can be either be called with or 
   ! without a range
@@ -24,10 +24,20 @@ MODULE RandomNumbers_mod
      MODULE PROCEDURE init_random_noseed, init_random_withseed
   END INTERFACE
 
+  INTERFACE lcg_init_seed
+     MODULE PROCEDURE lcg_init_noseed, lcg_init_withseed
+  END INTERFACE
+
+  INTERFACE set_parameter
+     MODULE PROCEDURE change_parameter, use_default_parameter
+  END INTERFACE
+
   ! make generic functions public
   PUBLIC :: random_uniform
   PUBLIC :: init_random_seed
   PUBLIC :: lcg_random
+  PUBLIC :: lcg_init_seed
+  PUBLIC :: set_parameter
 
 CONTAINS
 
@@ -112,12 +122,42 @@ CONTAINS
     IMPLICIT NONE
     REAL                   :: r
 
-    X = MOD(a*x+c, m)
-    r = REAL(X)/REAL(m)
+    seed = MOD(a*seed+c, m)
+    r = REAL(seed)/REAL(m)
 
   END FUNCTION lcg_random
 
+  subroutine lcg_init_withseed(n)
+    implicit NONE
+    integer :: n
+    seed = n
+  end subroutine lcg_init_withseed
 
 
+  subroutine lcg_init_noseed()
+    implicit NONE
 
+    CALL SYSTEM_CLOCK(COUNT=seed)
+
+  end subroutine lcg_init_noseed
+
+  subroutine change_parameter(a_new, c_new, m_new)
+    implicit none
+    integer :: a_new, c_new, m_new
+    a = a_new
+    c = c_new
+    m = m_new
+    print*, "Parameters changed for LCG to: ", "a=",a, "c=",c, "m=",m
+  end subroutine change_parameter
+
+  subroutine use_default_parameter()
+    implicit none
+    
+    a = 65539
+    c = 0
+    m = 2_LONG**31
+    print*, "Use default parameter for LCG: ", "a=",a, "c=",c, "m=",m
+
+  end subroutine use_default_parameter
+ 
 END MODULE RandomNumbers_mod
