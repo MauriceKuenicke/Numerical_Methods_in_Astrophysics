@@ -33,6 +33,7 @@ MODULE RandomNumbers_mod
   END INTERFACE
 
   ! make generic functions public
+  PUBLIC :: random_normal
   PUBLIC :: random_uniform
   PUBLIC :: init_random_seed
   PUBLIC :: lcg_random
@@ -159,5 +160,23 @@ CONTAINS
     print*, "Use default parameter for LCG: ", "a=",a, "c=",c, "m=",m
 
   end subroutine use_default_parameter
+
+
+  FUNCTION random_normal() RESULT(touple_A)
+    IMPLICIT NONE
+    REAL :: touple_A, touple_B
+    REAL :: random_A, random_B, q
+
+    q = 2.0
+
+    DO WHILE(q>=1)
+       random_A = random_uniform(-1.0,1.0)
+       random_B = random_uniform(-1.0,1.0)
+       q = random_A*random_A + random_B*random_B
+    END DO
+
+    touple_A = sqrt(-2*log(q)/q)*random_A
+    touple_B = sqrt(-2*log(q)/q)*random_B
+  END FUNCTION random_normal
  
 END MODULE RandomNumbers_mod
