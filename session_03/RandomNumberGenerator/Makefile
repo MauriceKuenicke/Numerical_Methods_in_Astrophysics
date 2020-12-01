@@ -10,7 +10,7 @@ F90FLAGS = -O2 -Wall
 SRC_rndm     = RandomNumbers_mod.f90 RandomNumbers.f90
 OBJECTS_rndm = $(SRC_rndm:.f90=.o)
 
-SRC_period     = RandomNumbers_mod.f90 Find_Period.f90
+SRC_period     = RandomNumbers_mod.f90 FindPeriod.f90
 OBJECTS_period = $(SRC_period:.f90=.o)
 
 RandomNumbers: $(OBJECTS_rndm)
