@@ -1,3 +1,5 @@
+! A module containing different test functions and their derivatives which can be used in the
+! root searching algorithms
 module MyFuncs
 
     contains

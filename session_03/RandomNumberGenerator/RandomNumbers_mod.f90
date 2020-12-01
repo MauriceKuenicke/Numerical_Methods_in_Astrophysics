@@ -10,24 +10,28 @@ MODULE RandomNumbers_mod
   INTEGER(KIND=LONG)            :: m 
   INTEGER(KIND=LONG)            :: seed
 
-  ! interface for random_uniform, which can be either be called with or 
+  ! interface for random_uniform, which can either be called with or 
   ! without a range
   INTERFACE random_uniform
      MODULE PROCEDURE random_uniform_norange, random_uniform_zeroto,&
     &                 random_uniform_range
   END INTERFACE
 
-  ! interface for init_random_seed, which can be call with or without
+  ! interface for init_random_seed, which can be called with or without
   ! a seed integer, in the latter case the seed is taken from the
   ! system clock
   INTERFACE init_random_seed
      MODULE PROCEDURE init_random_noseed, init_random_withseed
   END INTERFACE
-
+ 
+  ! interface for lcg_init_seed, which can either be called with or 
+  ! without a seed
   INTERFACE lcg_init_seed
      MODULE PROCEDURE lcg_init_noseed, lcg_init_withseed
   END INTERFACE
-
+  
+  ! interface for set_parameter, which can either be called with or 
+  ! without a seed
   INTERFACE set_parameter
      MODULE PROCEDURE change_parameter, use_default_parameter
   END INTERFACE
@@ -118,7 +122,7 @@ CONTAINS
 
 
   !-----------------------------------------------------------------------
-  !added function for lcg
+  !Generate random number with LCG
   FUNCTION lcg_random() RESULT (r)
     IMPLICIT NONE
     REAL                   :: r
@@ -128,20 +132,22 @@ CONTAINS
 
   END FUNCTION lcg_random
 
+  ! Routine that changes the seed value
   subroutine lcg_init_withseed(n)
     implicit NONE
     integer :: n
     seed = n
   end subroutine lcg_init_withseed
 
-
+  ! Routine that creates a seed value from the system clock
   subroutine lcg_init_noseed()
     implicit NONE
 
-    CALL SYSTEM_CLOCK(COUNT=seed)
+    CALL SYSTEM_CLOCK(COUNT=seed)     ! using intrinsic SYSTEM_CLOCK function
 
   end subroutine lcg_init_noseed
 
+  ! Routine that changes the lcg parameter to the given input values
   subroutine change_parameter(a_new, c_new, m_new)
     implicit none
     integer :: a_new, c_new, m_new
@@ -150,7 +156,8 @@ CONTAINS
     m = m_new
     print*, "Parameters changed for LCG to: ", "a=",a, "c=",c, "m=",m
   end subroutine change_parameter
-
+  
+  ! Alternative Routine which sets the default parameter
   subroutine use_default_parameter()
     implicit none
     
@@ -161,7 +168,7 @@ CONTAINS
 
   end subroutine use_default_parameter
 
-
+  ! Function that generates normally distributed random numbers using the polar method.
   FUNCTION random_normal() RESULT(touple_A)
     IMPLICIT NONE
     REAL :: touple_A, touple_B
@@ -169,7 +176,7 @@ CONTAINS
 
     q = 2.0
 
-    DO WHILE(q>=1)
+    DO WHILE(q>=1 .OR. q<=0)
        random_A = random_uniform(-1.0,1.0)
        random_B = random_uniform(-1.0,1.0)
        q = random_A*random_A + random_B*random_B
