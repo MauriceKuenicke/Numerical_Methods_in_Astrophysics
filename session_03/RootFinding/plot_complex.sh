@@ -15,7 +15,7 @@
 
 # data file name can be given as command-line option, otherwise
 # default is used
-datafile=${1:-complexnewton.dat}
+datafile=${1:-data/complexnewton.dat}
 
 # run gnuplot to create plot
 gnuplot <<EOF

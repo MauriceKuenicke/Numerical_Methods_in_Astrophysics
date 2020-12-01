@@ -18,7 +18,7 @@ program CalcRoots_Complex
         end do
     end do
 
-    !print*, r    
+    print*, "Results exported to data/complexnewton.dat"
 
 end program CalcRoots_Complex
 
