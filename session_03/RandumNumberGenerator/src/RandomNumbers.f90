@@ -4,7 +4,7 @@ PROGRAM RandomNumbers
   IMPLICIT NONE
 
   ! declaration of variables and functions
-  INTEGER        :: i, n, GetN, k
+  INTEGER        :: i, n, GetN, k, seed
   TYPE :: VECTOR
      REAL(KIND=8) :: x_coord, y_coord, z_coord
   END TYPE VECTOR
@@ -24,7 +24,7 @@ PROGRAM RandomNumbers
   n = GetN()
 
   ! initialize random numbers
-  !seed = init_random_seed(2337)
+  seed = init_random_seed(2337)
   
   
   ! write n and n random numbers to STDOUT
@@ -56,6 +56,34 @@ PROGRAM RandomNumbers
     WRITE(10,*) vec
 
   END DO outer
+
+  outer2: DO i=1,n
+    inner2: DO k=1,3
+       IF(k==1) THEN
+          vec%x_coord = random_uniform(0.0,1.0)
+
+          !PRINT*, vec%x_coord
+       END IF
+       IF(k==2) THEN
+          vec%y_coord = random_uniform(0.0,1.0)
+
+          !PRINT*, vec%y_coord
+       END IF
+       IF(k==3) THEN
+          vec%z_coord = random_uniform(0.0,1.0)
+
+          !PRINT*, vec%z_coord
+       END IF
+
+       !OPEN(UNIT=10, FILE='LCG_DATA.dat')
+       !WRITE(10,*) lcg_random()
+    END DO inner2
+
+    PRINT*, vec
+    OPEN(UNIT=20, FILE='random_uniform_DATA.dat')
+    WRITE(20,*) vec
+
+  END DO outer2
 
   !DO i=1,n
     !PRINT*, lcg_random()
