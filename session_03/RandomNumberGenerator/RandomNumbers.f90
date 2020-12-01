@@ -11,7 +11,7 @@ PROGRAM RandomNumbers
     n = GetN()
     
     call lcg_init_seed(100)
-    call set_parameter(7, 4, 15)           ! Set new parameter when (a,c,m) is given otherwise use default values in module
+    call set_parameter()           ! Set new parameter when (a,c,m) is given otherwise use default values in module
   
 
    OPEN(UNIT=21, FILE='data/LCG_DATA.dat')

@@ -1,13 +1,23 @@
+! A module containing different root finding algorithms
+! >> Bisection Algorithm, Newton-Rhapson-Method and Newton-Rhapson-Method for complex functions <<
+
 module RootFinding
     implicit none
 
+    ! new type declaration
     type myroot_type
     real(kind=8) :: x_0, epsilon, y
     integer :: iter
     end type myroot_type
 
+    type myroot_complex_type
+    real(kind=8) :: x_val, y_val, irr 
+    integer :: iter_number
+    end type myroot_complex_type
+
     
 contains
+
 
 function find_root_bisection(func, a, b, export_accuracy) result(res)
     implicit none
@@ -18,6 +28,7 @@ function find_root_bisection(func, a, b, export_accuracy) result(res)
     real(kind=8) :: midpoint, func_value_midpoint, diff, func_value_lower, func_value_higher
     integer :: iter
 
+    ! Open export file if data is exported later
     if (export_accuracy) then
         open(20, file="data/accuracy_bisection.dat")
     end if
@@ -41,17 +52,20 @@ function find_root_bisection(func, a, b, export_accuracy) result(res)
 
         diff = abs(bracket_start-bracket_end)
         iter = iter +1
-
+        
+        ! write to export file
         if (export_accuracy) then
             write(20, *) iter, diff
         end if
-
-        if (iter == 100000) then
-            print*, "No root found after 100000 iterations! Giving out last values instead:" 
+        
+        ! exit loop after 500000 failed iterations to not end up in a infinite loop
+        if (iter == 500000) then
+            print*, "No root found after 500000 iterations! Giving out last values instead:" 
             exit
         end if
     enddo
 
+    ! declare return variables
     res%x_0 = midpoint
     res%epsilon = diff
     res%y = func(midpoint)
@@ -60,14 +74,15 @@ function find_root_bisection(func, a, b, export_accuracy) result(res)
 end function find_root_bisection
 
 
-
+! Use Newton-Rhapson
 function find_root_newton(func, func_derivative, init_guess, export_accuracy) result(res)
     implicit none
     type(myroot_type) :: res
     real(kind=8) :: func, func_derivative, init_guess, func_value, func_value_derivative, epsilon_zero, x
     integer :: iter
     logical :: export_accuracy
-
+    
+    ! Open export file if data is exported later
     if (export_accuracy) then
         open(20, file="data/accuracy_newton.dat")
     end if
@@ -82,31 +97,33 @@ function find_root_newton(func, func_derivative, init_guess, export_accuracy) re
         x = x + epsilon_zero
         iter = iter+1
 
+        ! write to export file
         if (export_accuracy) then
             write(20, *) iter, abs(epsilon_zero)
         end if
 
-        if (iter == 100000) then
-            print*, "No root found after 100000 iterations! Giving out last values instead:" 
+        ! exit loop after 500000 failed iterations to not end up in a infinite loop
+        if (iter == 500000) then
+            print*, "No root found after 500000 iterations! Giving out last values instead:" 
             exit
         end if
     enddo
-
+    
+    ! declare return variables
     res%x_0 = x
     res%epsilon = abs(epsilon_zero)
     res%y = func(x)
     res%iter = iter
 end function find_root_newton
 
-
+! Use Newton-Rhapson Method on a complex function
 function find_root_newton_complex(func_complex, func_derivative, init_guess) result(r)
-    implicit none 
+    implicit none
+    type(myroot_complex_type) :: r
     complex(kind=8) :: func_complex, func_derivative, init_guess, func_value, func_value_derivative, z, epsilon_zero
-    integer :: r, iter
-
-    open(20, file="data/complexnewton.dat")
+    integer :: iter=0
     
-    r = 0
+    
     epsilon_zero = 1.d0
     z = init_guess
     do while(abs(epsilon_zero) > 1e-10 )
@@ -116,16 +133,21 @@ function find_root_newton_complex(func_complex, func_derivative, init_guess) res
         z = z + epsilon_zero
         iter = iter+1
     end do
+    
+    ! declare output variables
+    r%x_val = real(init_guess)
+    r%y_val = imag(init_guess)
+    r%iter_number = iter
 
+    ! set irr to 1 if real root z=1 is found
     if (imag(z) == 0.d0) then
-        write(20, *) real(init_guess), imag(init_guess), 1, iter
+        r%irr = 1
     else
-        write(20, *) real(init_guess), imag(init_guess), 0, iter
+        r%irr = 0
     end if
-    r = 1
 end function find_root_newton_complex
 
-
+! Calculate the midpoint of an interval
 function calc_midpoint(interval_start, interval_end) result(midpoint)
     implicit none
     real(kind=8) :: interval_start, interval_end, midpoint
@@ -135,6 +157,8 @@ function calc_midpoint(interval_start, interval_end) result(midpoint)
 end function calc_midpoint
 
 
+! Fortran implementation of the linspace function in the python numpy package
+! Create an array in a given range with constant stepsizes
 subroutine linspace(from, to, array)
     implicit none 
     real(kind=8), intent(in) :: from, to
@@ -150,7 +174,6 @@ subroutine linspace(from, to, array)
         array(1) = from
         return
     end if
-
 
     do i=1, n
         array(i) = from + range * (i - 1) / (n - 1)
