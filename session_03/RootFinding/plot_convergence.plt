@@ -1,4 +1,5 @@
-# Plot with gnuplot -p plot_accuracy.plt
+# Plotting the error margin over the number of iterations
+# Plot with gnuplot -p plot_convergence.plt
 
 set terminal png
 set title "Convergence of root finding algorithms"

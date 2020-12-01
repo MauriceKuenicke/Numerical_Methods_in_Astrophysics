@@ -41,7 +41,7 @@ splot '$datafile' using 1:2:3 with points pointtype 7 pointsize 0.5
 
 set autoscale z
 set cbtics 10
-set out 'convergence.png'
+set out 'convergence_complex.png'
 
 splot '$datafile' using 1:2:4 with points palette pt 7 ps 1
 #splot '$datafile' using 1:2:4 with dots palette 
