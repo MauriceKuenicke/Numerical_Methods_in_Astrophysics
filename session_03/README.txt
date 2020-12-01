@@ -1,4 +1,10 @@
+3.1 Assignements
 
+3.1.1 Random Number Generator
+    c) The period of the LCG with the parameters a = 7, c = 4 and m = 15 with seed = 4 is 12 numbers, the period of the LCG with the same parameters but seed = 11
+    is only 3 numbers.
+    
+    f)
 
 3.1.3 Root finding program
     1) Function: Both algorithms return 0.0707107 as a root value. The bisection algorithm took 35 iterations while the Newton-Raphson algorithm took 6 iterations.
