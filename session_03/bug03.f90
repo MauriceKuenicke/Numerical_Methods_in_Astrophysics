@@ -8,7 +8,8 @@ PROGRAM Statistics
 
   ! read in the number of numbers
   PRINT*, 'how many numbers?'
-  READ*, n
+  !READ*, n
+  n = 100000
 
   ! allocate memory
   ALLOCATE(input(n), values(n))
