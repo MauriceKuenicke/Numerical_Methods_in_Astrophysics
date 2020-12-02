@@ -31,3 +31,6 @@
     closely at the output, it is noticeable that the mean value does not increase as expected when i = 9. This means that the effect of the integer overflow can
     already be felt with a ten-digit number. In the second case, this leads to errors in the displayed calculation of the standard deviation, since the "values"
     values are squared. This explains the observed deviation at i=4, since such a 5-digit number squared already represents a 10-digit number.
+    
+    The first formula for the standard deviation is the better formula, that is the formula for "stddev". It is to be preferred, since this formula constantly
+    delivers the same standard deviation despite different offsets. Even with very large offsets, the formula does not fail.
