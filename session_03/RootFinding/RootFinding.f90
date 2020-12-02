@@ -4,14 +4,17 @@
 module RootFinding
     implicit none
 
+    ! Double precision byte size
+    integer,parameter :: dp=kind(0.d0)
+
     ! new type declaration
     type myroot_type
-    real(kind=8) :: x_0, epsilon, y
+    real(dp) :: x_0, epsilon, y
     integer :: iter
     end type myroot_type
 
     type myroot_complex_type
-    real(kind=8) :: x_val, y_val, irr 
+    real(dp) :: x_val, y_val, irr 
     integer :: iter_number
     end type myroot_complex_type
 
@@ -21,11 +24,11 @@ contains
 
 function find_root_bisection(func, a, b, export_accuracy) result(res)
     implicit none
-    real(kind=8) :: bracket_start, bracket_end, func, a, b
+    real(dp) :: bracket_start, bracket_end, func, a, b
     type(myroot_type) :: res
     logical :: export_accuracy
 
-    real(kind=8) :: midpoint, func_value_midpoint, diff, func_value_lower, func_value_higher
+    real(dp) :: midpoint, func_value_midpoint, diff, func_value_lower, func_value_higher
     integer :: iter
 
     ! Open export file if data is exported later
@@ -78,7 +81,7 @@ end function find_root_bisection
 function find_root_newton(func, func_derivative, init_guess, export_accuracy) result(res)
     implicit none
     type(myroot_type) :: res
-    real(kind=8) :: func, func_derivative, init_guess, func_value, func_value_derivative, epsilon_zero, x
+    real(dp) :: func, func_derivative, init_guess, func_value, func_value_derivative, epsilon_zero, x
     integer :: iter
     logical :: export_accuracy
     
@@ -87,7 +90,7 @@ function find_root_newton(func, func_derivative, init_guess, export_accuracy) re
         open(20, file="data/accuracy_newton.dat")
     end if
 
-    epsilon_zero = 1.d0
+    epsilon_zero = 1.0_dp
     x = init_guess
     iter = 0
     do while(abs(epsilon_zero) > 1e-10 )
@@ -120,11 +123,11 @@ end function find_root_newton
 function find_root_newton_complex(func_complex, func_derivative, init_guess) result(r)
     implicit none
     type(myroot_complex_type) :: r
-    complex(kind=8) :: func_complex, func_derivative, init_guess, func_value, func_value_derivative, z, epsilon_zero
+    complex(dp) :: func_complex, func_derivative, init_guess, func_value, func_value_derivative, z, epsilon_zero
     integer :: iter=0
     
     
-    epsilon_zero = 1.d0
+    epsilon_zero = 1.0_dp
     z = init_guess
     do while(abs(epsilon_zero) > 1e-10 )
         func_value = func_complex(z)
@@ -140,7 +143,7 @@ function find_root_newton_complex(func_complex, func_derivative, init_guess) res
     r%iter_number = iter
 
     ! set irr to 1 if real root z=1 is found
-    if (imag(z) == 0.d0) then
+    if (imag(z) == 0.0_dp) then
         r%irr = 1
     else
         r%irr = 0
@@ -161,9 +164,9 @@ end function calc_midpoint
 ! Create an array in a given range with constant stepsizes
 subroutine linspace(from, to, array)
     implicit none 
-    real(kind=8), intent(in) :: from, to
-    real(kind=8), intent(out) :: array(:)
-    real(kind=8) :: range
+    real(dp), intent(in) :: from, to
+    real(dp), intent(out) :: array(:)
+    real(dp) :: range
     integer :: n, i
     n = size(array)
     range = to - from

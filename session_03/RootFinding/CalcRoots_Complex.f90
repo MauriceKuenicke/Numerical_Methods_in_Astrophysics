@@ -21,20 +21,20 @@ program CalcRoots_Complex
     ! declare local variables
     type(myroot_complex_type) :: r
     integer :: j , i
-    complex(kind=8) :: init_guess
-    real(kind=8) :: array(100), x_value, y_value
+    complex(dp) :: init_guess
+    real(dp) :: array(100), x_value, y_value
 
     open(20, file="data/complexnewton.dat")
 
     ! create array in a specific range with constant stepsize
-    call linspace(-1.d0, 1.d0, array)
+    call linspace(-1.0_dp, 1.0_dp, array)
 
     ! iterate over array once for x values and once for y values and try to find the root
     do j=1, size(array)
         x_value = array(j)
         do i=1, size(array)
             y_value = array(i)
-            init_guess = cmplx(x_value, y_value, kind=8)
+            init_guess = cmplx(x_value, y_value, kind=dp)
             r = find_root_newton_complex(func1_complex, dfunc1_complex, init_guess)
             
             write(20, *) r

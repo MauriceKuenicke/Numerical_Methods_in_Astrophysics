@@ -27,8 +27,8 @@ program CalcRoots
     export_accuracy = .TRUE.                                          ! .FALSE. or .TRUE.  --> no data will be exported if set to .FALSE.
 
     
-    ! r = find_root_newton(func2, dfunc2, -5.d0, export_accuracy)     ! find_root_newton(func, func_derivative, init_guess)
-    r = find_root_bisection(func2, -10.d0, 10.d0, export_accuracy)    ! find_root_bisection(func, a, b)
+     r = find_root_newton(func2, dfunc2, -5.0_dp, export_accuracy)     ! find_root_newton(func, func_derivative, init_guess)
+    !r = find_root_bisection(func2, -10.d0, 10.d0, export_accuracy)    ! find_root_bisection(func, a, b)
     
     ! write and print result
     write(*, '(2X, "Root", 23X, "Epsilon", 19X, "Value", 28X,"Iterations")')

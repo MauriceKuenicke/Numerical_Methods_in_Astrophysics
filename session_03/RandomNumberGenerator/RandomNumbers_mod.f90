@@ -3,6 +3,9 @@
 MODULE RandomNumbers_mod
   IMPLICIT NONE
   PRIVATE
+  
+  ! Double precision byte size
+  INTEGER, PARAMETER            :: dp = kind(0.d0)
 
   INTEGER, PARAMETER            :: LONG = SELECTED_INT_KIND(15)
   INTEGER(KIND=LONG)            :: a
@@ -171,8 +174,8 @@ CONTAINS
   ! Function that generates normally distributed random numbers using the polar method.
   FUNCTION random_normal() RESULT(touple_A)
     IMPLICIT NONE
-    REAL :: touple_A, touple_B
-    REAL :: random_A, random_B, q
+    REAL(dp) :: touple_A, touple_B
+    REAL(dp) :: random_A, random_B, q
 
     q = 2.0
 
