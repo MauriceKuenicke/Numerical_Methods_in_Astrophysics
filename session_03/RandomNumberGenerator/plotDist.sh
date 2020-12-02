@@ -1,5 +1,5 @@
 #!/bin/bash
-#
+# run with bash plotDist.sh data/datafilename
 
 
 # data file name can be given as command-line option, otherwise

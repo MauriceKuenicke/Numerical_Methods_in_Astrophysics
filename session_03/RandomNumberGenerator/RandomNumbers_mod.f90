@@ -46,6 +46,7 @@ MODULE RandomNumbers_mod
   PUBLIC :: lcg_random
   PUBLIC :: lcg_init_seed
   PUBLIC :: set_parameter
+  PUBLIC :: dp
 
 CONTAINS
 

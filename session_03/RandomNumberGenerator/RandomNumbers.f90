@@ -1,4 +1,4 @@
-!!+ CalcRoots.f90
+!!+ RandomNumber.f90
 !!   
 !!   This program exports two data files containing N lines with three random numbers each.
 !!   The data in one file is calculated using a Linear Congruential Generator (LCG) while the data in the other
@@ -24,7 +24,7 @@ PROGRAM RandomNumbers
 
     ! local variables declaration
     integer :: i, n, GetN
-    real(kind=8) :: lcg_1, lcg_2, lcg_3, rndu_1, rndu_2, rndu_3
+    real(dp) :: lcg_1, lcg_2, lcg_3, rndu_1, rndu_2, rndu_3
     
 
     ! set n given by cmd-line argument
@@ -45,9 +45,9 @@ PROGRAM RandomNumbers
        rndu_1 = random_uniform(0.0,1.0)
        rndu_2 = random_uniform(0.0,1.0)
        rndu_3 = random_uniform(0.0,1.0)
-       WRITE(22,*) rndu_1, rndu_1, rndu_3
+       WRITE(22,*) rndu_1, rndu_2, rndu_3
 
-       print*, lcg_1, lcg_2, lcg_3, rndu_1, rndu_1, rndu_3
+       print*, lcg_1, lcg_2, lcg_3, rndu_1, rndu_2, rndu_3
    end do
    print*, "Numbers successfully exported into data/"
 

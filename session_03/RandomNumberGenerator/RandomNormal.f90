@@ -10,7 +10,7 @@
 !!
 !!     expected result:
 !!                     >> .dat file that contains N normally distributed numbers
-!!
+!!-
 PROGRAM RandomNormal
     USE RandomNumbers_mod
     IMPLICIT NONE
