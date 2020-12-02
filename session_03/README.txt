@@ -27,7 +27,7 @@
 
 3.2 Bug Huntig Exercise
     For large values of i (i>12) it can be seen that the mean value becomes negative. This indicates an integer overflow, because REAL(n) is always positive. So in
-    line 26 of the code shown in the equation mean = SUM(values)/REAL(n), at least partially negative values for value must have been summed. If one looks closely
-    at the output, it is noticeable that the mean value does not increase as expected when i = 9. This means that the effect of the integer overflow can already be
-    felt with a ten-digit number. In the second case, this leads to errors in the displayed calculation of the standard deviation, since the "values" values are
-    squared. This explains the observed deviation at i=4, since such a 5-digit number squared already represents a 10-digit number.
+    line 26 of the code shown in the equation mean = SUM(values)/REAL(n), at least partially negative values for "values" must have been summed. If one looks
+    closely at the output, it is noticeable that the mean value does not increase as expected when i = 9. This means that the effect of the integer overflow can
+    already be felt with a ten-digit number. In the second case, this leads to errors in the displayed calculation of the standard deviation, since the "values"
+    values are squared. This explains the observed deviation at i=4, since such a 5-digit number squared already represents a 10-digit number.
