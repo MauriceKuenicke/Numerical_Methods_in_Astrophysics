@@ -1,18 +1,31 @@
 3.1 Assignements
 
 3.1.1 Random Number Generator
+    a) Both functions are implemented in RandomNumbers_mod.f90.
+    
+    b) The variables are declared as private in the beginning of RandomNumbers_mod.f90. For funcionality an additional subroutine was added to change the
+    parameters of the LCG algorithm in RandomNumbers_mod.f90.
+    
     c) The period of the LCG with the parameters a = 7, c = 4 and m = 15 with seed = 4 is 12 numbers, the period of the LCG with the same parameters but seed = 11
     is only 3 numbers.
     
-    f)If you look at the vectors generated from the random numbers with the LCG algorithm, you might think at first sight that they are well distributed random
+    d) This parameters were added as the default for the in b) implemented subroutine.
+    
+    e) This is done in RandomNumbers.f90. The output can be found in RandomNumberGenerator/data.
+    
+    f) If you look at the vectors generated from the random numbers with the LCG algorithm, you might think at first sight that they are well distributed random
     numbers. But if you rotate the plot with the mouse, you will notice that the random numbers are collected in layers in the 3D view. So the LCG algorithm does
     not provide good pseudo-random numbers. In contrast, the method integrated in Fortran90 provides a uniformly filled cube.
+    
+    g) The function was added in RandomNumbers_mod.f90. The main program can is located in RandomNormal.f90. The output can be found in RandomNumberGenerator/data
+    
+    h) THe histogram can be plotted with the histogram.plt file.
     
  ---------------------------------------------------------------------------------
 
 3.1.3 Root finding program
-    1) Function: Both algorithms return 0.0707107 as a root value. The bisection algorithm took 35 iterations while the Newton-Raphson algorithm took 6 iterations.
-    Second root at -0.07 can't be found with those initial values.
+    1) Function: Both algorithms return 0.0707107 as a root value. The bisection algorithm took 35 iterations while the Newton-Raphson algorithm took 6
+    iterations. Second root at -0.07 can't be found with those initial values.
 
     2) Function: Bisection return -1.769292 after 38 iterations
     Newton-Raphson with 
@@ -30,8 +43,8 @@
 ----------------------------------------------------------------------------------
 
 3.2 Bug Huntig Exercise
-    For large values of i (i>12) it can be seen that the mean value becomes negative. This indicates an integer overflow, because REAL(n) is always positive. So in
-    line 26 of the code shown in the equation mean = SUM(values)/REAL(n), at least partially negative values for "values" must have been summed. If one looks
+    For large values of i (i>12) it can be seen that the mean value becomes negative. This indicates an integer overflow, because REAL(n) is always positive. So 
+    in line 26 of the code shown in the equation mean = SUM(values)/REAL(n), at least partially negative values for "values" must have been summed. If one looks
     closely at the output, it is noticeable that the mean value does not increase as expected when i = 9. This means that the effect of the integer overflow can
     already be felt with a ten-digit number. In the second case, this leads to errors in the displayed calculation of the standard deviation, since the "values"
     values are squared. This explains the observed deviation at i=4, since such a 5-digit number squared already represents a 10-digit number.
