@@ -4,7 +4,11 @@
     c) The period of the LCG with the parameters a = 7, c = 4 and m = 15 with seed = 4 is 12 numbers, the period of the LCG with the same parameters but seed = 11
     is only 3 numbers.
     
-    f)
+    f)If you look at the vectors generated from the random numbers with the LCG algorithm, you might think at first sight that they are well distributed random
+    numbers. But if you rotate the plot with the mouse, you will notice that the random numbers are collected in layers in the 3D view. So the LCG algorithm does
+    not provide good pseudo-random numbers. In contrast, the method integrated in Fortran90 provides a uniformly filled cube.
+
+Translated with www.DeepL.com/Translator (free version)
 
 3.1.3 Root finding program
     1) Function: Both algorithms return 0.0707107 as a root value. The bisection algorithm took 35 iterations while the Newton-Raphson algorithm took 6 iterations.
