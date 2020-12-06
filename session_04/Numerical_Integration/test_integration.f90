@@ -16,9 +16,14 @@ program test_integration
     integer, parameter :: dp = kind(0.d0)
     real(dp) :: res
 
-    res = trapezoidal(func1, 0._dp, 2._dp, 1e-6_dp)
+    res = trapez(func1, 0._dp, 2._dp, 1e-6_dp)
     print*, "Result: ", res
-    res = trapezoidal(func2, 0._dp, 2._dp, 1e-6_dp)
+    res = trapez(func2, 0._dp, 2._dp, 1e-6_dp)
+    print*, "Result: ", res
+
+    res = simpson(func1, 0._dp, 2._dp, 1e-6_dp)
+    print*, "Result: ", res
+    res = simpson(func2, 0._dp, 2._dp, 1e-6_dp)
     print*, "Result: ", res
 
 
