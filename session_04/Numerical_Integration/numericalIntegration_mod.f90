@@ -72,7 +72,7 @@ function simpson(func, lower, upper, accuracy) result(area)
         
         area = (4._dp/3._dp)*t_kplus - (1._dp/3._dp)*t_k
         relative_error = abs((area - trapezoid_area_old)/area)
-        if (relative_error <= accuracy) exit
+        if(relative_error < accuracy) exit
     end do 
 
 end function simpson
