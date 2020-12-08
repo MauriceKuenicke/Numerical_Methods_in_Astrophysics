@@ -40,12 +40,16 @@ program numerical_pi
     real(kind=dp)           :: x_coord, y_coord, pi_estimate, error
     integer                 :: k, i, events, number, seed
     integer, dimension(31)  :: all_numbers
+    
+    !Parameters to calculate a value of Pi as accurate as possible 
     real(kind=dp), parameter:: pi_real = 4.0_dp*atan(1.0_dp)
 
+    !Array for specifying the amount of random numbers to be used for the Monte Carlo method for calculating Pi.
     all_numbers = (/ 10, 25, 50, 75, 100, 250, 500, 750, 1000, 2500, 5000, 7500, 10000, 25000, 50000, 75000, 100000, 250000, &
     &500000, 750000, 1000000, 2500000, 5000000, 7500000, 10000000, 25000000, 50000000, 75000000, 100000000, &
     &250000000, 500000000 /)
 
+    !Setting the seed value for the generation of reproducible results.
     seed = init_random_seed(26574)
 
     open(unit=77, file='error_pi.dat')
@@ -59,16 +63,22 @@ program numerical_pi
         events = 0
 
         do i=1,number
+            !Produces two random numbers.
             x_coord = random_uniform(0.0,1.0)
             y_coord = random_uniform(0.0,1.0)
 
+            !Check if an random number pair is inside the circle.
             if (x_coord*x_coord + y_coord*y_coord < 1.0_dp) then
                 events = events +1
             end if
         end do
 
+        !Estimation of pi by dividing the number of points within the quarter circle by all generated points.
+        !The multiplication by 4 is needed, because the generated random numbers are limited to the first quadrant.
+        !This could be changed by altering the interval limits with random_uniform() to -1 to 1.
         pi_estimate = 4_dp*real(events)/real(number)
 
+        !Error formular given by lab session 4.
         error = abs(pi_estimate - pi_real)/pi_real
 
         write(77,'(I9,3X,F18.16,3X,ES22.16)') number, pi_estimate, error
