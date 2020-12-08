@@ -11,8 +11,7 @@ F90FLAGS = -O2 -Wall
 SRC_Pi   = RandomNumbers_mod.f90 Pi_with_Monte_Carlo.f90
 OBJECTS_Pi = $(SRC_Pi:.f90=.o)
 
-RandomNumbers: $(OBJECTS_Numbers)
-	$(F90) $(F90FLAGS) $(OBJECTS_Numbers) -o $@
+all: Pi_with_Monte_Carlo
 
 Pi_with_Monte_Carlo: $(OBJECTS_Pi)
 	$(F90) $(F90FLAGS) $(OBJECTS_Pi) -o $@
