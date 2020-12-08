@@ -14,26 +14,23 @@ program test_integration
     implicit none
 
     integer, parameter :: dp = kind(0.d0)
-    real(dp) :: res, open_solution_naive
+    real(dp) :: res_1, res_2, open_solution_naive
     logical  :: export
     
     export = .false.
-    res = trapez(func1, 0._dp, 2._dp, 1e-7_dp, export)
-    print*, "Result: ", res
-    res = simpson(func1, 0._dp, 2._dp, 1e-7_dp, export)
-    print*, "Result: ", res
+    res_1 = trapez(func1, 0._dp, 2._dp, 1e-7_dp, export)
+    res_2 = simpson(func1, 0._dp, 2._dp, 1e-7_dp, export)
+    write(*, '("Function 1:", 10X, "trapez:  ", F14.12, / ,21X, "simpson: ", F14.12)') res_1, res_2
     
     export = .true.
-    res = trapez(func2, 0._dp, 2._dp, 1e-7_dp, export)
-    print*, "Result: ", res
-    res = simpson(func2, 0._dp, 2._dp, 1e-7_dp, export)
-    print*, "Result: ", res
+    res_1 = trapez(func2, 0._dp, 2._dp, 1e-7_dp, export)
+    res_2 = simpson(func2, 0._dp, 2._dp, 1e-7_dp, export)
+    write(*, '(/,"Function 2:", 10X, "trapez:  ", F14.12, / ,21X, "simpson: ", F14.12)') res_1, res_2
     
     export = .false.
-    res = open_solution_naive(func3, 0._dp, 1e-7_dp, "trapez", export)
-    print*, "Result: ", res
-    res = open_solution_naive(func3, 0._dp, 1e-7_dp, "simpson", export)
-    print*, "Result: ", res
+    res_1 = open_solution_naive(func3, 0._dp, 1e-7_dp, "trapez", export)
+    res_2 = open_solution_naive(func3, 0._dp, 1e-7_dp, "simpson", export)
+    write(*, '(/,"Function 3:", 10X, "trapez:  ", F14.12, / ,21X, "simpson: ", F14.12)') res_1, res_2
 
 end program test_integration
 
@@ -49,12 +46,13 @@ function open_solution_naive(func, lower, accuracy, algorithm, export) result(re
 
     j = 1._dp
     res = 1._dp
+    res_new = 0._dp
     do  
         if (algorithm == "trapez") then
             res_new = trapez(func, lower, j, accuracy, export)
         end if
         if (algorithm == "simpson") then
-            res_new = trapez(func, lower, j, accuracy, export)
+            res_new = simpson(func, lower, j, accuracy, export)
         end if
         j = j + 1._dp
         error = abs(res_new - res)

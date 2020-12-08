@@ -8,8 +8,6 @@ module numericalIntegration_mod
     integer            :: recursion_level
 
 
-
-
     public :: trapez
     public :: simpson
 
