@@ -8,13 +8,13 @@ F90      = gfortran
 F90FLAGS = -O2 -Wall
 
 # program definitions
-SRC_Pi   = RandomNumbers_mod.f90 Pi_with_Monte_Carlo.f90
-OBJECTS_Pi = $(SRC_Pi:.f90=.o)
+SRC_num  = numericalIntegration_mod.f90 myfuncs.f90 test_integration.f90
+OBJECTS_num = $(SRC_num:.f90=.o)
 
-all: Pi_with_Monte_Carlo
+all: test_integration
 
-Pi_with_Monte_Carlo: $(OBJECTS_Pi)
-	$(F90) $(F90FLAGS) $(OBJECTS_Pi) -o $@
+test_integration: $(OBJECTS_num)
+	$(F90) $(F90FLAGS) $(OBJECTS_num) -o $@
 
 .f90:
 	$(F90) $(F90FLAGS) $? -o $@
@@ -23,4 +23,4 @@ Pi_with_Monte_Carlo: $(OBJECTS_Pi)
 	$(F90) $(F90FLAGS) -c $<
 
 clean:
-	rm -f *.o *~ *.mod
+	rm -f *.o *~ *.mod *.png
