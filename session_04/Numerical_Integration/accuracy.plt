@@ -1,5 +1,5 @@
-# Plotting the error margin over the number of iterations
-# Plot with gnuplot -p plot_convergence.plt
+# Plotting the relative error vs the number of function evaluations
+# Plot with gnuplot -p accuracy.plt
 
 set terminal png
 set title "Function Evaluations vs. Accuracy"
