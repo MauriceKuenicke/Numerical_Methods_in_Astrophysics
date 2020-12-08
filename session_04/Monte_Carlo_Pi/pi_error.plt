@@ -10,6 +10,6 @@ set output "error_pi.png"
 m="error_pi.dat"
 
 set style data linespoints
-set key right bottom
+set key top
 
 plot m using 1:3 title "Deviation of the Monte Carlo value for pi from pi"
