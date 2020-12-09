@@ -11,7 +11,8 @@
 !!     
 !!     
 !!
-!!     compile with: > gfortran -O2 -Wall -c Pi_with_Monte_Carlo.f90
+!!     compile with: > gfortran -O2 -Wall -c RandomNumbers_mod.f90
+!!                     gfortran -O2 -Wall -c Pi_with_Monte_Carlo.f90
 !!                     gfortran -O2 -Wall RandomNumbers_mod.o Pi_with_Monte_Carlo.o -o Pi_with_Monte_Carlo
 !!
 !!     usage:        > ./Pi_with_Monte_Carlo
