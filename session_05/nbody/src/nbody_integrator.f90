@@ -25,8 +25,8 @@ PROGRAM nbody_integrator
     END DO
 
     time = 0.
-    time_step = 0.5
-    time_limit = 10
+    time_step = 0.01
+    time_limit = 1
 
     time_step_half = time_step*0.5
     open(unit=77, file='out.dat')
