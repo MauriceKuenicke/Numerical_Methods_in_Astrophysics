@@ -12,7 +12,7 @@
 
 # settings
 infile='out.dat'
-every=2
+every=100
 
 # loop over lines
 i=0     # file number counter
@@ -28,7 +28,7 @@ while read line
 do
 
     # set name of output png file
-    outfile=`printf "threebody_%5.5i.png" $i`
+    outfile=`printf "plots/threebody_%5.5i.png" $i`
     echo generating $outfile
 
 
