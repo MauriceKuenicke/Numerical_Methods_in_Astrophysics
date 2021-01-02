@@ -12,5 +12,8 @@ MODULE parameters
   INTEGER, PARAMETER :: I1B = SELECTED_INT_KIND(2)
   INTEGER, PARAMETER :: SP  = KIND(1.0)
   INTEGER, PARAMETER :: DP  = KIND(1.d0)
+
+  ! physical constants
+  Real(DP), Parameter :: G = 1._DP
   
 END MODULE parameters

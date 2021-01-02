@@ -4,7 +4,7 @@ set terminal png
 set title "System Energy"
 set xlabel "Timestep"
 set ylabel "System Energy"
-set output "system_energy.png"
+set output "plots/system_energy.png"
 set xrange [0 to 10]
 set yrange [-0.05 to 0.05]
 m="out.dat"

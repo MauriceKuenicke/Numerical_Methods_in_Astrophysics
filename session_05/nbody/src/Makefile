@@ -12,7 +12,7 @@ F90FLAGS := -O3 -Wall
 
 SRCDIR   := src
 
-SOURCE=parameters.f90 nbody_particles.f90 nbody_io.f90 nbody_integrator.f90
+SOURCE=parameters.f90 leapfrog.f90 nbody_io.f90 nbody_integrator.f90
 OBJECTS=$(SOURCE:.f90=.o)
 
 all: nbody
@@ -20,11 +20,11 @@ all: nbody
 nbody: $(OBJECTS)
 	$(F90) $(F90FLAGS) $(OBJECTS) -o $@ 
 
-nbody_particles.o: parameters.o nbody_particles.f90
+leapfrog.o: parameters.o leapfrog.f90
 
-nbody_io.o: parameters.o nbody_particles.o nbody_io.f90
+nbody_io.o: parameters.o leapfrog.o nbody_io.f90
 
-nbody_integrator.o:  parameters.o nbody_particles.o nbody_io.o nbody_integrator.f90
+nbody_integrator.o:  parameters.o leapfrog.o nbody_io.o nbody_integrator.f90
 
 %.o: %.f90
 	$(F90) $(F90FLAGS) -c $<

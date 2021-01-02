@@ -6,12 +6,10 @@
 !!       
 !!-
 MODULE nbody_io
-  USE parameters
-  USE nbody_particles
   IMPLICIT NONE
   PRIVATE
 
-  PUBLIC :: load_bodies, print_bodies
+  PUBLIC :: load_bodies
 
 CONTAINS
 
@@ -19,47 +17,29 @@ CONTAINS
   ! read particles from STDIN and load them into this also allocating
   ! the required memory
   !
-  SUBROUTINE load_bodies(this)
+  SUBROUTINE load_bodies(n_particles, x, v, a, m)
+    use parameters
     IMPLICIT NONE
-    TYPE(nbodies), INTENT(out) :: this
 
-    INTEGER(I4B)               :: i, n
-    REAL(DP), DIMENSION(7)     :: p
+    integer                                               :: status, i
+    integer, intent(out)                                  :: n_particles
+    real(8), dimension (:,:), allocatable,  intent(out)   :: x, v, a
+    real(8), dimension (:), allocatable, intent(out)      :: m
+    
 
-    ! first input line is number of particles
-    READ*, n
+    ! Allocate initial particle conditions
+    READ*, n_particles
+    ALLOCATE(m(n_particles), &
+             x(3, n_particles), & 
+             v(3, n_particles), &
+             a(3, n_particles), STAT=status)     
+    IF(status/=0) STOP
 
-    CALL new_nbodies(this, n)
-
-    ! no read n lines of particles data
-    DO i=1, n
-       READ*, p
-       CALL set_body(this, i, p)
+    DO i=1, n_particles
+        READ*, m(i), x(1,i), x(2,i), x(3,i), &
+               v(1,i), v(2,i), v(3,i)
     END DO
 
   END SUBROUTINE load_bodies
-
-  !
-  ! print bodies to STDOUT 
-  !
-  SUBROUTINE print_bodies(this)
-    IMPLICIT NONE
-    TYPE(nbodies), INTENT(in) :: this
-
-    INTEGER(I4B)              :: i, n
-    TYPE(particle)            :: p
-
-    n = get_n(this)
-
-    PRINT*, n
-    
-    DO i=1,n
-
-       p = get_body(this, i)
-       PRINT*, get_mass(p), get_pos(p), get_vel(p)
-
-    END DO
-
-  END SUBROUTINE print_bodies
 
 END MODULE nbody_io
