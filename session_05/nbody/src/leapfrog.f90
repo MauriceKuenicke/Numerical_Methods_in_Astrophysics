@@ -62,7 +62,7 @@ subroutine calculate_force_acceleration(n_particles, m, x, a)
                 dx = x(1,i) - x(1,j)
                 dy = x(2,i) - x(2,j)
                 dz = x(3,i) - x(3,j)
-                rr = sqrt(dx*dx + dy*dy + dz*dz)
+                rr = sqrt(dx*dx + dy*dy + dz*dz + 0.1_DP*0.1_DP)  ! 0.1 softening value
 
                 a(1,i) = a(1,i) - G*m(j)/(rr*rr*rr) * dx
                 a(2,i) = a(2,i) - G*m(j)/(rr*rr*rr) * dy
