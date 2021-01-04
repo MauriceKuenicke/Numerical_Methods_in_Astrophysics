@@ -59,9 +59,10 @@ set yrange [-2 to 2]
 set xtics 1
 set ytics 1
 
-plot 'tmp.dat' using 2:3 with points pt 7 ps 3,\
-     'tmp.dat' using 5:6 with points pt 7 ps 3,\
-     'tmp.dat' using 8:9 with points pt 7 ps 3
+
+plot 'tmp.dat' using 2:3 with linespoints pt 7 ps 3,\
+     'tmp.dat' using 5:6 with linespoints pt 7 ps 3,\
+     'tmp.dat' using 8:9 with linespoints pt 7 ps 3
 
 set origin 0.45 , 0.0
 set size 0.6, 1
@@ -72,9 +73,9 @@ set yrange [-0.5 to 0.5]
 set xtics 0.5
 set ytics 0.5
 
-plot 'tmp.dat' using 2:3 with points pt 7 ps 3,\
-     'tmp.dat' using 5:6 with points pt 7 ps 3,\
-     'tmp.dat' using 8:9 with points pt 7 ps 3
+plot 'tmp.dat' using 2:3 with linespoints pt 7 ps 3,\
+     'tmp.dat' using 5:6 with linespoints pt 7 ps 3,\
+     'tmp.dat' using 8:9 with linespoints pt 7 ps 3
 
 EOF
 

@@ -3,74 +3,59 @@ MODULE leapfrog
     IMPLICIT NONE
     PRIVATE
   
-    PUBLIC :: position_drift, velocity_kick, calculate_force_acceleration
+    PUBLIC :: leapfrog_part1, leapfrog_part2, calculate_force_acceleration
   
   CONTAINS
   
-  subroutine position_drift(n_particles,x,v,time_step_half)
+  subroutine leapfrog_part1(n_particles,x,v,a,time_step)
     implicit NONE
 
-    integer, intent(in)    :: n_particles
-    real(DP), intent(out)   :: x(3, n_particles)
-    real(DP), intent(in)    :: v(3, n_particles)
-    real(DP), intent(in)    :: time_step_half
+    integer, intent(in)     :: n_particles
+    real(DP), intent(out)   :: x(n_particles, 3)
+    real(DP), intent(in)    :: v(n_particles, 3), a(n_particles, 3)
+    real(DP), intent(in)    :: time_step
 
-    integer :: i
+    x = x + time_step*v + 0.5_DP * time_step*time_step * a 
 
-    do i=1, n_particles
-        x(1,i) = x(1,i) + time_step_half * v(1,i)
-        x(2,i) = x(2,i) + time_step_half * v(2,i)
-        x(3,i) = x(3,i) + time_step_half * v(3,i)
-    end do
+   end subroutine leapfrog_part1
 
-   end subroutine position_drift
-
-subroutine velocity_kick(n_particles, v,a, time_step)
+subroutine leapfrog_part2(n_particles, v,a, a_old, time_step)
     implicit none
+    integer, intent(in)     :: n_particles
+    real(DP), intent(in)    :: a(n_particles, 3), a_old(n_particles, 3), time_step
+    real(DP), intent(out)   :: v(n_particles, 3)
 
-    integer, intent(in)   :: n_particles 
-    real(DP), intent(out) :: v(3, n_particles)
-    real(DP), intent(in)  :: a(3, n_particles)
-    real(DP), intent(in)  :: time_step
+    v = v + 0.5_DP * time_step * (a_old+a)
 
-    integer :: i
+end subroutine leapfrog_part2
 
-    do i=1, n_particles
-        v(1,i) = v(1,i) + time_step * a(1,i)
-        v(2,i) = v(2,i) + time_step * a(2,i)
-        v(3,i) = v(3,i) + time_step * a(3,i)
-    end do
-end subroutine velocity_kick
-
-subroutine calculate_force_acceleration(n_particles, m, x, a)
+subroutine calculate_force_acceleration(n_particles, m, x, a, U)
     implicit none
     integer, intent(in)   :: n_particles
-    real(DP), intent(in)  :: x(3, n_particles)
+    real(DP), intent(in)  :: x(n_particles, 3)
     real(DP), intent(in)  :: m(n_particles)
-    real(DP), intent(out) :: a(3, n_particles)
+    real(DP), intent(out) :: a(n_particles, 3),  U
 
     integer :: i,j
-    real(DP) :: dx,dy,dz,rr
+    real(DP) :: distance, distance2, fac
+    real(DP), dimension(3)  :: distance_vector
 
-    do i=1, n_particles
-        a(1, i) = 0._DP
-        a(2, i) = 0._DP
-        a(3, i) = 0._DP
+    a(:,:) = 0._DP
+    U = 0._DP 
+    do i=1, n_particles-1
+        do j=i+1, n_particles
+            distance_vector = x(i,:) - x(j,:)
+            distance2 = sum(distance_vector*distance_vector) + 0.005*0.005  ! softening value
+            distance = sqrt(distance2)
 
-        do j = 1, n_particles
-            if (i /= j) then
-                dx = x(1,i) - x(1,j)
-                dy = x(2,i) - x(2,j)
-                dz = x(3,i) - x(3,j)
-                rr = sqrt(dx*dx + dy*dy + dz*dz + 0.1_DP*0.1_DP)  ! 0.1 softening value
-
-                a(1,i) = a(1,i) - G*m(j)/(rr*rr*rr) * dx
-                a(2,i) = a(2,i) - G*m(j)/(rr*rr*rr) * dy
-                a(3,i) = a(3,i) - G*m(j)/(rr*rr*rr) * dz
-            end if
+            fac = distance*distance*distance
+            U = U - G * m(i)*m(j)/distance
+            
+            a(j,:) = a(j,:) + (m(i)/fac)*(distance_vector)
+            a(i,:) = a(i,:) - (m(j)/fac)*(distance_vector)
         end do
     end do
-    return
+
 end subroutine calculate_force_acceleration
-  
+
   END MODULE leapfrog
