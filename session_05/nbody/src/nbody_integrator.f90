@@ -12,9 +12,9 @@ PROGRAM nbody_integrator
 
     ! Parameter
     time = 0.
-    time_step = 0.0001
-    time_limit = 10
-    pertubation = 0.0001_DP
+    time_step = 0.000005
+    time_limit = 100
+    pertubation = 0.0000_DP
     
     ! Open output file and load body data
     open(unit=77, file='out.dat')
@@ -31,6 +31,7 @@ PROGRAM nbody_integrator
     write(77,*) time, x(1,1), x(1,2), x(1,3), x(2,1), x(2,2), x(2,3), x(3,1), x(3,2), x(3,3), E, abs((E - E_old)/E_old)
     
     ! Integrate trajectories
+    print*, "Integrate trajectories..."
     do while(time <= time_limit)
 
         call advance_position(n_particles,x,v,a,time_step) 
@@ -40,7 +41,7 @@ PROGRAM nbody_integrator
 
         call update_velocities(n_particles, v,a, a_old, time_step)
         time = time + time_step
-        counter = counter +1 
+        counter = counter + 1 
 
         call calculate_kinetic_energy(n_particles, v, m, T)
         E = U + T
@@ -48,12 +49,13 @@ PROGRAM nbody_integrator
         ! Write results to output file
         write(77,*) time, x(1,1), x(1,2), x(1,3), x(2,1), x(2,2), x(2,3), x(3,1), x(3,2), x(3,3), E, abs((E - E_old)/E_old)
 
-        ! Output current time and partial energy error for every 10000 steps
-        if (mod(counter,10000) == 0) then
-            print*, time, abs((E - E_old)/E_old)
+        ! Output current time and partial energy error for every 100000 steps
+        if (mod(counter,100000) == 0) then
+            write(*, '(" Timestep:   ", F9.6, 10X, "Partial Energy Error:  ", E9.2)') time, abs((E - E_old)/E_old)
         end if
         E_old = E
     end do
+    print*, "Done!"
 end program
 
 

@@ -1,25 +1,13 @@
 # Plot with gnuplot -p plot.plt
 
 set terminal png
-set title "Energydifference"
 set xlabel "Timestep"
-set ylabel "Energydifference"
+set ylabel "Partial Energy Error"
 set output "plots/energy_difference.png"
 m="out.dat"
 
-set style data linespoints
-set key top
+set nokey
 
-plot m using 1:9 title "Difference"
+set yrange[0 to 0.000000000000002]
 
-
-
-set title "System Energy"
-set xlabel "Timestep"
-set ylabel "System Energy"
-set output "plots/system_energy.png"
-
-set style data linespoints
-set key top
-
-plot m using 1:8 title "System Energy"
+plot m every 100000 using 1:12 with lines lw 2 title "Partial Energy Error"
