@@ -3,11 +3,11 @@ MODULE leapfrog
     IMPLICIT NONE
     PRIVATE
   
-    PUBLIC :: leapfrog_part1, leapfrog_part2, calculate_force_acceleration
+    PUBLIC :: advance_position, update_velocities, calculate_force_acceleration
   
   CONTAINS
   
-  subroutine leapfrog_part1(n_particles,x,v,a,time_step)
+  subroutine advance_position(n_particles,x,v,a,time_step)
     implicit NONE
 
     integer, intent(in)     :: n_particles
@@ -17,9 +17,9 @@ MODULE leapfrog
 
     x = x + time_step*v + 0.5_DP * time_step*time_step * a 
 
-   end subroutine leapfrog_part1
+   end subroutine advance_position
 
-subroutine leapfrog_part2(n_particles, v,a, a_old, time_step)
+subroutine update_velocities(n_particles, v,a, a_old, time_step)
     implicit none
     integer, intent(in)     :: n_particles
     real(DP), intent(in)    :: a(n_particles, 3), a_old(n_particles, 3), time_step
@@ -27,7 +27,7 @@ subroutine leapfrog_part2(n_particles, v,a, a_old, time_step)
 
     v = v + 0.5_DP * time_step * (a_old+a)
 
-end subroutine leapfrog_part2
+end subroutine update_velocities
 
 subroutine calculate_force_acceleration(n_particles, m, x, a, U)
     implicit none
@@ -45,7 +45,7 @@ subroutine calculate_force_acceleration(n_particles, m, x, a, U)
     do i=1, n_particles-1
         do j=i+1, n_particles
             distance_vector = x(i,:) - x(j,:)
-            distance2 = sum(distance_vector*distance_vector) + 0.005*0.005  ! softening value
+            distance2 = sum(distance_vector*distance_vector)
             distance = sqrt(distance2)
 
             fac = distance*distance*distance

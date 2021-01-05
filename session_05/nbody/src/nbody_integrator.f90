@@ -5,32 +5,40 @@ PROGRAM nbody_integrator
     IMPLICIT NONE
 
     ! declare local variables
-    integer          :: n_particles, counter=0
-    real(8)          :: time, time_step, time_limit, E, E_old, U, T
-    real(8), dimension (:,:), allocatable :: x, v, a, a_old 
-    real(8), dimension (:), allocatable :: m
-    
-    open(unit=77, file='out.dat')
-    call load_bodies(n_particles, x, v, a, m, a_old)
+    integer                                :: n_particles, counter=0
+    real(DP)                               :: time, time_step, time_limit, E, E_old, U, T, pertubation
+    real(DP), dimension (:,:), allocatable :: x, v, a, a_old 
+    real(DP), dimension (:), allocatable   :: m
 
+    ! Parameter
     time = 0.
     time_step = 0.0001
     time_limit = 10
-    E_old = 0._DP
+    pertubation = 0.0001_DP
     
+    ! Open output file and load body data
+    open(unit=77, file='out.dat')
+    call load_bodies(n_particles, x, v, a, m, a_old)
+
+    ! Add pertubation
+    v(1,:) = v(1,:) + pertubation
+
     ! Calculate Initial values
     call calculate_force_acceleration(n_particles, m, x, a, U)
     call calculate_kinetic_energy(n_particles, v, m, T)
+    E_old = 0._DP
     E = U + T 
     write(77,*) time, x(1,1), x(1,2), x(1,3), x(2,1), x(2,2), x(2,3), x(3,1), x(3,2), x(3,3), E, abs((E - E_old)/E_old)
+    
+    ! Integrate trajectories
     do while(time <= time_limit)
 
-        call leapfrog_part1(n_particles,x,v,a,time_step) 
+        call advance_position(n_particles,x,v,a,time_step) 
         a_old = a
         
         call calculate_force_acceleration(n_particles, m, x, a, U)
 
-        call leapfrog_part2(n_particles, v,a, a_old, time_step)
+        call update_velocities(n_particles, v,a, a_old, time_step)
         time = time + time_step
         counter = counter +1 
 
@@ -39,15 +47,13 @@ PROGRAM nbody_integrator
 
         ! Write results to output file
         write(77,*) time, x(1,1), x(1,2), x(1,3), x(2,1), x(2,2), x(2,3), x(3,1), x(3,2), x(3,3), E, abs((E - E_old)/E_old)
-        if (mod(counter,1000) == 0) then
+
+        ! Output current time and partial energy error for every 10000 steps
+        if (mod(counter,10000) == 0) then
             print*, time, abs((E - E_old)/E_old)
         end if
         E_old = E
-
-
     end do
-    
-
 end program
 
 
@@ -61,7 +67,6 @@ subroutine calculate_kinetic_energy(n_particles, v, m, T)
     ! Local variables
     integer   :: i
 
-    ! Kinetic energy
     T = 0.d0
     do i=1, n_particles
         T = T + m(i) *(v(i,1)*v(i,1)+v(i,2)*v(i,2)+v(i,3)*v(i,3))
