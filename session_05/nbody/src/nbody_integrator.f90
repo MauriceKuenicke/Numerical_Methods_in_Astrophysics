@@ -88,9 +88,9 @@ end program
 subroutine calculate_kinetic_energy(n_particles, v, m, T)
     use parameters
     implicit NONE
-    integer, intent(in)  :: n_particles
-    real(8), intent(in)  :: v(n_particles, 3), m(n_particles)
-    real(8), intent(out) :: T
+    integer, intent(in)   :: n_particles
+    real(DP), intent(in)  :: v(n_particles, 3), m(n_particles)
+    real(DP), intent(out) :: T
 
     ! Local variables
     integer   :: i
