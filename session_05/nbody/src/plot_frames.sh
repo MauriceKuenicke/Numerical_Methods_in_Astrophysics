@@ -12,7 +12,7 @@
 
 # settings
 infile='out.dat'
-every=100
+every=1000
 
 # loop over lines
 i=0     # file number counter
