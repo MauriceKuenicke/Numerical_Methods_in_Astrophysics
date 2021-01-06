@@ -1,3 +1,29 @@
+!!+nbody_integrator.f90
+!!
+!! This program integrates an nbody system using the Leapfrog algorithm. Use "plot_frames.sh" and "movie.sh" to generate 
+!! a movie based on the calculations or use "trajectories.plt" and "energy.plt" to generate plots for the trajectories and relative
+!! energy errors respectively.
+!! 
+!! compile with: > gfortran -O3 -Wall -c parameters.f90
+!!               > gfortran -O3 -Wall -c leapfrog.f90
+!!               > gfortran -O3 -Wall -c nbody_io.f90
+!!               > gfortran -O3 -Wall -c nbody_integrator.f90
+!!               > gfortran -O3 -Wall parameters.o leapfrog.o nbody_io.o nbody_integrator.o -o nbody 
+!!
+!! usage:        > ./nbody < lecture_init_values.dat
+!!
+!! expected result:
+!!               Integrate trajectories...
+!!               Timestep:    0.500000          Partial Energy Error:   0.11E-14
+!!               Timestep:    1.000000          Partial Energy Error:   0.14E-12
+!!               Timestep:    1.500000          Partial Energy Error:   0.86E-14
+!!                       ...                                  ...
+!!               Timestep:   98.999997          Partial Energy Error:   0.69E-15
+!!               Timestep:   99.499997          Partial Energy Error:   0.32E-14
+!!               Timestep:   99.999997          Partial Energy Error:   0.20E-13
+!!               Done!
+!!-
+
 PROGRAM nbody_integrator
     USE parameters
     USE nbody_io

@@ -1,4 +1,5 @@
 # Plot with gnuplot -p trajectory.plt
+# Plots the tajectories of the 3 bodies in the system
 
 set terminal png
 set xlabel "x"

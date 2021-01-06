@@ -1,4 +1,6 @@
-# Plot with gnuplot -p plot.plt
+# Plot with gnuplot -p energy.plt
+# Plots the relative energy error of the nbody system over the timesteps
+# Only use every 10000th data point --> can be changed in line 15
 
 set terminal png
 set xlabel "Timestep"

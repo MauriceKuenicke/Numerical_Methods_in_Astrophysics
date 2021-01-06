@@ -1,3 +1,9 @@
+!!+leapfrog.f90
+!!
+!! module: provides subroutines to calculate positional/velocity updates
+!!         based on the Leapfrog algortihm
+!!       
+!!-
 MODULE leapfrog
     use parameters
     IMPLICIT NONE

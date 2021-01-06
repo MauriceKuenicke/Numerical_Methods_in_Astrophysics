@@ -1,6 +1,6 @@
 !!+parameters.f90
 !!
-!! module: useful definitions and constants
+!! module: Numerical precision and physical constants
 !!
 !!-
 MODULE parameters

@@ -1,6 +1,6 @@
 !!+nbody_io.f90
 !!
-!! module: provides functions to read and write nbody data, supported format
+!! module: provides subroutines to read nbody data, supported format
 !!         is one line of header with number of particles N follow by N
 !!         lines with particles data (mass, pos, vel --> 7 REALs)
 !!       
